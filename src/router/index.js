@@ -1,29 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/views/Home.vue'
-import Articles from '@/views/Articles.vue'
-import ArticleDetail from '@/views/ArticleDetail.vue'
-import About from '@/views/About.vue'
-import Archive from '@/views/Archive.vue'
-import Tags from '@/views/Tags.vue'
-import Write from '@/views/Write.vue'
 
 const routes = [
-  { path: '/', name: 'Home', component: Home },
-  { path: '/articles', name: 'Articles', component: Articles },
-  { path: '/article/:id', name: 'ArticleDetail', component: ArticleDetail },
-  { path: '/about', name: 'About', component: About },
-  { path: '/archive', name: 'Archive', component: Archive },
-  { path: '/tags', name: 'Tags', component: Tags },
-  { path: '/write', name: 'Write', component: Write },
+  { path: '/', name: 'Home', component: () => import('@/views/Home.vue') },
+  { path: '/articles', name: 'Articles', component: () => import('@/views/Articles.vue') },
+  { path: '/article/:id', name: 'ArticleDetail', component: () => import('@/views/ArticleDetail.vue') },
+  { path: '/about', name: 'About', component: () => import('@/views/About.vue') },
+  { path: '/archive', name: 'Archive', component: () => import('@/views/Archive.vue') },
+  { path: '/tags', name: 'Tags', component: () => import('@/views/Tags.vue') },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    }
+    if (savedPosition) return savedPosition
     return { top: 0 }
   }
 })

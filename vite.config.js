@@ -8,5 +8,22 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    warmup: {
+      clientFiles: ['./src/main.js']
+    }
+  },
+  build: {
+    target: 'esnext',
+    cssMinify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vue-vendor': ['vue', 'vue-router'],
+          'markdown-vendor': ['marked', 'highlight.js']
+        }
+      }
+    }
   }
 })

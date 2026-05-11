@@ -189,7 +189,70 @@ body {
     background: none;
     padding: 0;
     color: var(--text-primary);
+    font-size: 0.875em;
+    line-height: 1.7;
   }
+  .prose-custom pre code .hljs-keyword,
+  .prose-custom pre code .hljs-selector-tag,
+  .prose-custom pre code .hljs-type { color: #7c3aed; }
+  .dark .prose-custom pre code .hljs-keyword,
+  .dark .prose-custom pre code .hljs-selector-tag,
+  .dark .prose-custom pre code .hljs-type { color: #a78bfa; }
+
+  .prose-custom pre code .hljs-string,
+  .prose-custom pre code .hljs-addition { color: #059669; }
+  .dark .prose-custom pre code .hljs-string,
+  .dark .prose-custom pre code .hljs-addition { color: #34d399; }
+
+  .prose-custom pre code .hljs-comment,
+  .prose-custom pre code .hljs-quote { color: #868e96; font-style: italic; }
+  .dark .prose-custom pre code .hljs-comment,
+  .dark .prose-custom pre code .hljs-quote { color: #6b7280; }
+
+  .prose-custom pre code .hljs-number,
+  .prose-custom pre code .hljs-literal { color: #d97706; }
+  .dark .prose-custom pre code .hljs-number,
+  .dark .prose-custom pre code .hljs-literal { color: #fbbf24; }
+
+  .prose-custom pre code .hljs-title,
+  .prose-custom pre code .hljs-section,
+  .prose-custom pre code .hljs-name { color: #dc2626; }
+  .dark .prose-custom pre code .hljs-title,
+  .dark .prose-custom pre code .hljs-section,
+  .dark .prose-custom pre code .hljs-name { color: #f87171; }
+
+  .prose-custom pre code .hljs-attr,
+  .prose-custom pre code .hljs-attribute,
+  .prose-custom pre code .hljs-variable,
+  .prose-custom pre code .hljs-template-variable { color: #2563eb; }
+  .dark .prose-custom pre code .hljs-attr,
+  .dark .prose-custom pre code .hljs-attribute,
+  .dark .prose-custom pre code .hljs-variable,
+  .dark .prose-custom pre code .hljs-template-variable { color: #60a5fa; }
+
+  .prose-custom pre code .hljs-built_in,
+  .prose-custom pre code .hljs-builtin-name { color: #0891b2; }
+  .dark .prose-custom pre code .hljs-built_in,
+  .dark .prose-custom pre code .hljs-builtin-name { color: #22d3ee; }
+
+  .prose-custom pre code .hljs-meta { color: #6366f1; }
+  .dark .prose-custom pre code .hljs-meta { color: #818cf8; }
+
+  .prose-custom pre code .hljs-regexp { color: #db2777; }
+  .dark .prose-custom pre code .hljs-regexp { color: #f472b6; }
+
+  .prose-custom pre code .hljs-deletion { color: #dc2626; }
+  .dark .prose-custom pre code .hljs-deletion { color: #f87171; }
+
+  .prose-custom pre code .hljs-emphasis { font-style: italic; }
+  .prose-custom pre code .hljs-strong { font-weight: bold; }
+
+  .prose-custom pre code .hljs-tag { color: #2563eb; }
+  .dark .prose-custom pre code .hljs-tag { color: #60a5fa; }
+  .prose-custom pre code .hljs-tag .hljs-name { color: #dc2626; }
+  .dark .prose-custom pre code .hljs-tag .hljs-name { color: #f87171; }
+  .prose-custom pre code .hljs-tag .hljs-attr { color: #7c3aed; }
+  .dark .prose-custom pre code .hljs-tag .hljs-attr { color: #a78bfa; }
   .prose-custom blockquote {
     border-left: 3px solid #4c6ef5;
     padding-left: 1.2em;

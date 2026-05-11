@@ -1,12 +1,10 @@
 <template>
   <div class="article-detail-page" v-if="article">
-    <!-- 阅读进度条 -->
     <div
       class="fixed top-16 left-0 h-0.5 z-50 transition-all duration-150"
       :style="{ width: `${readProgress}%`, backgroundColor: '#4c6ef5' }"
     ></div>
 
-    <!-- 封面 -->
     <div class="relative h-[40vh] md:h-[50vh] overflow-hidden">
       <ProgressiveImage
         :src="article.cover"
@@ -17,7 +15,6 @@
     </div>
 
     <div class="max-w-3xl mx-auto px-6">
-      <!-- 文章头部 -->
       <header class="relative -mt-20 z-10 mb-12">
         <div
           class="rounded-2xl p-8 md:p-10 border backdrop-blur-xl opacity-0-start animate-fade-in-up"
@@ -47,23 +44,23 @@
             <time>{{ article.date }}</time>
             <span>·</span>
             <span>{{ article.readTime }} 分钟阅读</span>
-            <span>·</span>
-            <span>{{ wordCount }} 字</span>
           </div>
         </div>
       </header>
 
-      <!-- 文章内容 -->
       <article class="pb-24">
+        <div v-if="loading" class="flex items-center justify-center py-24">
+          <div class="w-6 h-6 border-2 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
         <div
+          v-else
           class="prose-custom opacity-0-start animate-fade-in stagger-4"
           ref="articleBody"
-          v-html="article.content"
+          v-html="content"
         ></div>
       </article>
     </div>
 
-    <!-- 底部导航 -->
     <div class="max-w-3xl mx-auto px-6 pb-16">
       <div
         class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-6 rounded-2xl border"
@@ -102,20 +99,17 @@ import { useArticles } from '@/composables/useArticles'
 import { useScrollReveal } from '@/composables/useAnimation'
 import ProgressiveImage from '@/components/ProgressiveImage.vue'
 
-const { allArticles } = useArticles()
+const { allArticles, loadContent } = useArticles()
 const route = useRoute()
 const article = computed(() => allArticles.value.find(a => a.id === Number(route.params.id)))
 const articleBody = ref(null)
 const readProgress = ref(0)
+const content = ref('')
+const loading = ref(true)
 
 const currentIndex = computed(() => allArticles.value.findIndex(a => a.id === Number(route.params.id)))
 const prevArticle = computed(() => currentIndex.value > 0 ? allArticles.value[currentIndex.value - 1] : null)
 const nextArticle = computed(() => currentIndex.value < allArticles.value.length - 1 ? allArticles.value[currentIndex.value + 1] : null)
-const wordCount = computed(() => {
-  if (!article.value) return 0
-  const text = article.value.content.replace(/<[^>]*>/g, '')
-  return text.length
-})
 
 const handleScroll = () => {
   const scrollTop = window.scrollY
@@ -127,9 +121,13 @@ const handleScroll = () => {
 
 useScrollReveal()
 
-onMounted(() => {
+onMounted(async () => {
   window.addEventListener('scroll', handleScroll, { passive: true })
   window.scrollTo({ top: 0, behavior: 'instant' })
+  if (article.value) {
+    content.value = await loadContent(article.value)
+    loading.value = false
+  }
 })
 
 onUnmounted(() => {

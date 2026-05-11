@@ -1,71 +1,86 @@
-import { ref, computed } from 'vue'
-import { articles as builtInArticles } from '@/data/articles'
+import { computed, triggerRef } from 'vue'
 
-const STORAGE_KEY = 'techlog_articles'
+const postModules = import.meta.glob('/src/posts/*.md', { query: '?raw', import: 'default', eager: true })
 
-function loadFromStorage() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : []
-  } catch {
-    return []
-  }
-}
+const posts = []
+let id = 1
 
-function saveToStorage(articles) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(articles))
-}
+Object.entries(postModules).forEach(([filepath, raw]) => {
+  const fmEnd = raw.indexOf('---', 3)
+  if (fmEnd === -1) return
+  const fm = raw.slice(3, fmEnd)
+  const bodyLen = raw.length - fmEnd - 3
 
-const userArticles = ref(loadFromStorage())
+  const meta = {}
+  fm.split('\n').forEach(line => {
+    const ci = line.indexOf(':')
+    if (ci === -1) return
+    const key = line.slice(0, ci).trim()
+    let val = line.slice(ci + 1).trim()
+    if (val.startsWith('[') && val.endsWith(']')) {
+      val = val.slice(1, -1).split(',').map(s => s.trim().replace(/['"]/g, ''))
+    } else {
+      val = val.replace(/^['"]|['"]$/g, '')
+    }
+    if (val === 'true') meta[key] = true
+    else if (val === 'false') meta[key] = false
+    else meta[key] = val
+  })
 
-const allArticles = computed(() => {
-  return [...userArticles.value, ...builtInArticles].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  )
+  posts.push({
+    id: id++,
+    title: meta.title || '无标题',
+    date: meta.date || '1970-01-01',
+    tags: meta.tags || [],
+    categories: meta.categories || [],
+    cover: meta.cover || '',
+    excerpt: meta.excerpt || '',
+    featured: meta.featured || false,
+    readTime: Math.max(1, Math.round(bodyLen / 500)),
+    filepath,
+    _raw: raw,
+    _content: null
+  })
 })
 
-const allTags = computed(() => {
-  return [...new Set(allArticles.value.flatMap(a => a.tags))].sort()
-})
+posts.sort((a, b) => new Date(b.date) - new Date(a.date))
+
+const allArticles = computed(() => posts)
+
+const allTags = computed(() => [...new Set(posts.flatMap(p => p.tags))].sort())
+
+const allCategories = computed(() => [...new Set(posts.flatMap(p => p.categories))].sort())
 
 const archives = computed(() => {
-  return allArticles.value.reduce((acc, article) => {
-    const year = article.date.slice(0, 4)
-    if (!acc[year]) acc[year] = []
-    acc[year].push(article)
+  return posts.reduce((acc, a) => {
+    const y = a.date.slice(0, 4)
+    if (!acc[y]) acc[y] = []
+    acc[y].push(a)
     return acc
   }, {})
 })
 
-function addArticle({ title, excerpt, content, tags, cover }) {
-  const id = Date.now()
-  const today = new Date().toISOString().slice(0, 10)
-  const readTime = Math.max(1, Math.round(content.replace(/<[^>]*>/g, '').length / 500))
+let markdownReady = false
+let _parseFM = null
+let _renderMD = null
 
-  const article = {
-    id,
-    title,
-    slug: `user-${id}`,
-    excerpt,
-    content,
-    tags: tags.split(/[,，\s]+/).filter(Boolean),
-    date: today,
-    readTime,
-    cover: cover || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80',
-    featured: false,
-    isUserArticle: true
-  }
-
-  userArticles.value.unshift(article)
-  saveToStorage(userArticles.value)
-  return article
+async function ensureMarkdown() {
+  if (markdownReady) return
+  const mod = await import('@/utils/markdown.js')
+  _parseFM = mod.parseFrontmatter
+  _renderMD = mod.renderMarkdown
+  markdownReady = true
 }
 
-function deleteArticle(id) {
-  userArticles.value = userArticles.value.filter(a => a.id !== id)
-  saveToStorage(userArticles.value)
+async function loadContent(article) {
+  if (article._content) return article._content
+  await ensureMarkdown()
+  const { body } = _parseFM(article._raw)
+  article._content = _renderMD(body)
+  triggerRef(allArticles)
+  return article._content
 }
 
 export function useArticles() {
-  return { allArticles, allTags, archives, userArticles, addArticle, deleteArticle }
+  return { allArticles, allTags, allCategories, archives, loadContent }
 }

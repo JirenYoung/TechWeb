@@ -105,15 +105,36 @@
 </template>
 
 <script setup>
-import { author } from '@/data/articles'
 import { useScrollReveal } from '@/composables/useAnimation'
 import ProgressiveImage from '@/components/ProgressiveImage.vue'
 
+const author = {
+  name: 'TechLog',
+  title: '全栈工程师 / 技术写作者',
+  bio: '热爱技术，喜欢探索前沿。专注于前端工程化、性能优化和开发者体验。\n在这里记录技术思考、学习心得和项目经验。',
+  avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80',
+  skills: [
+    'Linux CentOS/Ubuntu',
+    'Nginx',
+    'Shell 脚本',
+    'MySQL 数据库',
+    '局域网搭建',
+    'VLAN/ACL/路由',
+    '服务器硬件运维',
+    'VMware/KVM 虚拟化'
+  ],
+  social: {
+    github: 'https://github.com/techlog',
+    twitter: 'https://twitter.com/techlog',
+  }
+}
+
 const timeline = [
-  { year: '2026', title: '技术博客上线', description: '开始系统性记录技术思考与工程实践' },
-  { year: '2025', title: '高级前端工程师', description: '负责前端架构设计与性能优化' },
-  { year: '2023', title: '前端工程师', description: '深入 Vue3/React 生态，专注工程化建设' },
-  { year: '2022', title: '入行前端开发', description: '从后端转前端，开启了新的技术旅程' },
+  { year: '2023.09 - 2026.06', title: '江苏电子信息职业学院', description: '计算机应用技术（系统集成）专科在读' },
+  { year: '实训项目', title: 'Linux 服务器搭建与运维', description: 'CentOS 系统初始化、用户权限管理、Nginx 服务部署、Shell 自动化脚本、防火墙与 SSH 安全加固' },
+  { year: '实训项目', title: '企业级局域网搭建', description: 'IP 地址规划、VLAN 划分、静态路由配置、ACL 访问控制、网络故障排查与互通测试' },
+  { year: '实训项目', title: '物理服务器运维部署', description: '服务器硬件组装、系统安装、RAID 配置、远程管理、服务稳定性监控与日常巡检' },
+  { year: '实训项目', title: 'MySQL 数据库运维', description: '数据库安装配置、权限管理、SQL 操作、定时备份与恢复、日志分析及故障处理' },
 ]
 
 const socialLinks = [

@@ -96,7 +96,6 @@ const navItems = [
   { label: '归档', path: '/archive' },
   { label: '标签', path: '/tags' },
   { label: '关于', path: '/about' },
-  { label: '✎ 写文章', path: '/write' },
 ]
 
 const staggerClasses = {
@@ -105,7 +104,6 @@ const staggerClasses = {
   '/archive': 'stagger-3',
   '/tags': 'stagger-4',
   '/about': 'stagger-5',
-  '/write': 'stagger-6',
 }
 </script>
 

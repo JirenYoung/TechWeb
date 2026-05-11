@@ -6,7 +6,7 @@
           <span class="char-by-char" style="visibility:hidden;">标签分类</span>
         </h1>
         <p class="text-lg" :style="{ color: 'var(--text-tertiary)' }">
-          {{ allTags.length }} 个标签 · {{ articles.length }} 篇文章
+          {{ allTags.length }} 个标签 · {{ allArticles.length }} 篇文章
         </p>
       </header>
 
