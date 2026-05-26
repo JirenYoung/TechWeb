@@ -17,8 +17,9 @@ if (args.length < 2 || args[0] !== 'new') {
 const title = args.slice(1).join(' ')
 const date = new Date()
 const dateStr = date.toISOString().slice(0, 10)
-const filename = `${dateStr}-${title}.md`
-const filepath = resolve(POSTS_DIR, filename)
+const dirName = `${title}-${dateStr}`
+const dirPath = resolve(POSTS_DIR, dirName)
+const filePath = resolve(dirPath, 'index.md')
 
 const frontmatter = `---
 title: ${title}
@@ -33,9 +34,11 @@ featured: true
 `
 
 try {
-  await mkdir(POSTS_DIR, { recursive: true })
-  await writeFile(filepath, frontmatter, 'utf-8')
-  console.log(`已创建: src/posts/${filename}`)
+  await mkdir(dirPath, { recursive: true })
+  await mkdir(resolve(dirPath, 'images'), { recursive: true })
+  await writeFile(filePath, frontmatter, 'utf-8')
+  console.log(`已创建: src/posts/${dirName}/index.md`)
+  console.log(`已创建: src/posts/${dirName}/images/`)
 } catch (err) {
   console.error('创建失败:', err.message)
   process.exit(1)

@@ -3,25 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --bg-tertiary: #f1f3f5;
-  --text-primary: #212529;
-  --text-secondary: #495057;
-  --text-tertiary: #868e96;
-  --border-color: #e9ecef;
-  --card-bg: #ffffff;
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
-  --card-hover-shadow: 0 10px 40px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
-  --nav-bg: rgba(255,255,255,0.72);
-  --nav-blur: blur(20px) saturate(180%);
-  --hero-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --code-bg: #f8f9fa;
-  --selection-bg: #4c6ef5;
-  --selection-text: #ffffff;
-}
-
-.dark {
   --bg-primary: #0f1117;
   --bg-secondary: #161822;
   --bg-tertiary: #1e2030;
@@ -37,6 +18,25 @@
   --hero-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   --code-bg: #1e2030;
   --selection-bg: #5c7cfa;
+  --selection-text: #ffffff;
+}
+
+.light {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #f1f3f5;
+  --text-primary: #212529;
+  --text-secondary: #495057;
+  --text-tertiary: #868e96;
+  --border-color: #e9ecef;
+  --card-bg: #ffffff;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+  --card-hover-shadow: 0 10px 40px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  --nav-bg: rgba(255,255,255,0.72);
+  --nav-blur: blur(20px) saturate(180%);
+  --hero-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --code-bg: #f8f9fa;
+  --selection-bg: #4c6ef5;
   --selection-text: #ffffff;
 }
 
@@ -184,6 +184,7 @@ body {
     overflow-x: auto;
     margin: 1.5em 0;
     border: 1px solid var(--border-color);
+    -webkit-overflow-scrolling: touch;
   }
   .prose-custom pre code {
     background: none;
@@ -194,65 +195,65 @@ body {
   }
   .prose-custom pre code .hljs-keyword,
   .prose-custom pre code .hljs-selector-tag,
-  .prose-custom pre code .hljs-type { color: #7c3aed; }
-  .dark .prose-custom pre code .hljs-keyword,
-  .dark .prose-custom pre code .hljs-selector-tag,
-  .dark .prose-custom pre code .hljs-type { color: #a78bfa; }
+  .prose-custom pre code .hljs-type { color: #a78bfa; }
+  .light .prose-custom pre code .hljs-keyword,
+  .light .prose-custom pre code .hljs-selector-tag,
+  .light .prose-custom pre code .hljs-type { color: #7c3aed; }
 
   .prose-custom pre code .hljs-string,
-  .prose-custom pre code .hljs-addition { color: #059669; }
-  .dark .prose-custom pre code .hljs-string,
-  .dark .prose-custom pre code .hljs-addition { color: #34d399; }
+  .prose-custom pre code .hljs-addition { color: #34d399; }
+  .light .prose-custom pre code .hljs-string,
+  .light .prose-custom pre code .hljs-addition { color: #059669; }
 
   .prose-custom pre code .hljs-comment,
-  .prose-custom pre code .hljs-quote { color: #868e96; font-style: italic; }
-  .dark .prose-custom pre code .hljs-comment,
-  .dark .prose-custom pre code .hljs-quote { color: #6b7280; }
+  .prose-custom pre code .hljs-quote { color: #6b7280; font-style: italic; }
+  .light .prose-custom pre code .hljs-comment,
+  .light .prose-custom pre code .hljs-quote { color: #868e96; font-style: italic; }
 
   .prose-custom pre code .hljs-number,
-  .prose-custom pre code .hljs-literal { color: #d97706; }
-  .dark .prose-custom pre code .hljs-number,
-  .dark .prose-custom pre code .hljs-literal { color: #fbbf24; }
+  .prose-custom pre code .hljs-literal { color: #fbbf24; }
+  .light .prose-custom pre code .hljs-number,
+  .light .prose-custom pre code .hljs-literal { color: #d97706; }
 
   .prose-custom pre code .hljs-title,
   .prose-custom pre code .hljs-section,
-  .prose-custom pre code .hljs-name { color: #dc2626; }
-  .dark .prose-custom pre code .hljs-title,
-  .dark .prose-custom pre code .hljs-section,
-  .dark .prose-custom pre code .hljs-name { color: #f87171; }
+  .prose-custom pre code .hljs-name { color: #f87171; }
+  .light .prose-custom pre code .hljs-title,
+  .light .prose-custom pre code .hljs-section,
+  .light .prose-custom pre code .hljs-name { color: #dc2626; }
 
   .prose-custom pre code .hljs-attr,
   .prose-custom pre code .hljs-attribute,
   .prose-custom pre code .hljs-variable,
-  .prose-custom pre code .hljs-template-variable { color: #2563eb; }
-  .dark .prose-custom pre code .hljs-attr,
-  .dark .prose-custom pre code .hljs-attribute,
-  .dark .prose-custom pre code .hljs-variable,
-  .dark .prose-custom pre code .hljs-template-variable { color: #60a5fa; }
+  .prose-custom pre code .hljs-template-variable { color: #60a5fa; }
+  .light .prose-custom pre code .hljs-attr,
+  .light .prose-custom pre code .hljs-attribute,
+  .light .prose-custom pre code .hljs-variable,
+  .light .prose-custom pre code .hljs-template-variable { color: #2563eb; }
 
   .prose-custom pre code .hljs-built_in,
-  .prose-custom pre code .hljs-builtin-name { color: #0891b2; }
-  .dark .prose-custom pre code .hljs-built_in,
-  .dark .prose-custom pre code .hljs-builtin-name { color: #22d3ee; }
+  .prose-custom pre code .hljs-builtin-name { color: #22d3ee; }
+  .light .prose-custom pre code .hljs-built_in,
+  .light .prose-custom pre code .hljs-builtin-name { color: #0891b2; }
 
-  .prose-custom pre code .hljs-meta { color: #6366f1; }
-  .dark .prose-custom pre code .hljs-meta { color: #818cf8; }
+  .prose-custom pre code .hljs-meta { color: #818cf8; }
+  .light .prose-custom pre code .hljs-meta { color: #6366f1; }
 
-  .prose-custom pre code .hljs-regexp { color: #db2777; }
-  .dark .prose-custom pre code .hljs-regexp { color: #f472b6; }
+  .prose-custom pre code .hljs-regexp { color: #f472b6; }
+  .light .prose-custom pre code .hljs-regexp { color: #db2777; }
 
-  .prose-custom pre code .hljs-deletion { color: #dc2626; }
-  .dark .prose-custom pre code .hljs-deletion { color: #f87171; }
+  .prose-custom pre code .hljs-deletion { color: #f87171; }
+  .light .prose-custom pre code .hljs-deletion { color: #dc2626; }
 
   .prose-custom pre code .hljs-emphasis { font-style: italic; }
   .prose-custom pre code .hljs-strong { font-weight: bold; }
 
-  .prose-custom pre code .hljs-tag { color: #2563eb; }
-  .dark .prose-custom pre code .hljs-tag { color: #60a5fa; }
-  .prose-custom pre code .hljs-tag .hljs-name { color: #dc2626; }
-  .dark .prose-custom pre code .hljs-tag .hljs-name { color: #f87171; }
-  .prose-custom pre code .hljs-tag .hljs-attr { color: #7c3aed; }
-  .dark .prose-custom pre code .hljs-tag .hljs-attr { color: #a78bfa; }
+  .prose-custom pre code .hljs-tag { color: #60a5fa; }
+  .light .prose-custom pre code .hljs-tag { color: #2563eb; }
+  .prose-custom pre code .hljs-tag .hljs-name { color: #f87171; }
+  .light .prose-custom pre code .hljs-tag .hljs-name { color: #dc2626; }
+  .prose-custom pre code .hljs-tag .hljs-attr { color: #a78bfa; }
+  .light .prose-custom pre code .hljs-tag .hljs-attr { color: #7c3aed; }
   .prose-custom blockquote {
     border-left: 3px solid #4c6ef5;
     padding-left: 1.2em;
@@ -271,5 +272,54 @@ body {
     border-radius: 12px;
     max-width: 100%;
     margin: 1.5em 0;
+  }
+  .prose-custom table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+}
+
+/* ── 移动端全局优化 ── */
+
+/* 禁用 iOS 点击高亮 */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 移动端：降级悬浮动画（触摸设备没有 hover 状态） */
+@media (hover: none) and (pointer: coarse) {
+  .card-hover:hover {
+    transform: none;
+    box-shadow: var(--card-shadow);
+  }
+
+  .btn-hover:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .shimmer-card:hover::before {
+    left: -100%;
+  }
+}
+
+/* 移动端：减小基础字号 */
+@media (max-width: 767px) {
+  html {
+    font-size: 15px;
+  }
+
+  body {
+    line-height: 1.7;
+  }
+}
+
+/* 移动端：缩小滚动条 */
+@media (max-width: 767px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
   }
 }

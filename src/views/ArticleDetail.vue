@@ -5,7 +5,7 @@
       :style="{ width: `${readProgress}%`, backgroundColor: '#4c6ef5' }"
     ></div>
 
-    <div class="relative h-[40vh] md:h-[50vh] overflow-hidden">
+    <div class="relative h-[35vh] md:h-[50vh] overflow-hidden">
       <ProgressiveImage
         :src="article.cover"
         :alt="article.title"
@@ -14,33 +14,33 @@
       <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent"></div>
     </div>
 
-    <div class="max-w-3xl mx-auto px-6">
-      <header class="relative -mt-20 z-10 mb-12">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <header class="relative -mt-16 md:-mt-20 z-10 mb-8 md:mb-12">
         <div
-          class="rounded-2xl p-8 md:p-10 border backdrop-blur-xl opacity-0-start animate-fade-in-up"
+          class="rounded-2xl p-5 sm:p-8 md:p-10 border backdrop-blur-xl opacity-0-start animate-fade-in-up"
           :style="{
             backgroundColor: 'var(--card-bg)',
             borderColor: 'var(--border-color)',
             boxShadow: 'var(--card-shadow)'
           }"
         >
-          <div class="flex flex-wrap gap-2 mb-4 stagger-1">
+          <div class="flex flex-wrap gap-2 mb-3 md:mb-4 stagger-1">
             <span
               v-for="tag in article.tags"
               :key="tag"
-              class="px-3 py-1 text-xs font-medium rounded-full border"
+              class="px-2.5 py-1 text-xs font-medium rounded-full border"
               :style="{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }"
             >
               {{ tag }}
             </span>
           </div>
           <h1
-            class="text-3xl md:text-4xl font-bold leading-tight mb-4 stagger-2"
+            class="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3 md:mb-4 stagger-2"
             :style="{ color: 'var(--text-primary)' }"
           >
             <span class="char-by-char" style="visibility:hidden;">{{ article.title }}</span>
           </h1>
-          <div class="flex flex-wrap items-center gap-4 text-sm stagger-3" :style="{ color: 'var(--text-tertiary)' }">
+          <div class="flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm stagger-3" :style="{ color: 'var(--text-tertiary)' }">
             <time>{{ article.date }}</time>
             <span>·</span>
             <span>{{ article.readTime }} 分钟阅读</span>
@@ -48,8 +48,8 @@
         </div>
       </header>
 
-      <article class="pb-24">
-        <div v-if="loading" class="flex items-center justify-center py-24">
+      <article class="pb-16 md:pb-24">
+        <div v-if="loading" class="flex items-center justify-center py-16 md:py-24">
           <div class="w-6 h-6 border-2 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
         </div>
         <div
@@ -61,9 +61,9 @@
       </article>
     </div>
 
-    <div class="max-w-3xl mx-auto px-6 pb-16">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 pb-12 md:pb-16">
       <div
-        class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-6 rounded-2xl border"
+        class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-5 md:p-6 rounded-2xl border"
         :style="{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)' }"
       >
         <router-link
@@ -125,7 +125,12 @@ onMounted(async () => {
   window.addEventListener('scroll', handleScroll, { passive: true })
   window.scrollTo({ top: 0, behavior: 'instant' })
   if (article.value) {
-    content.value = await loadContent(article.value)
+    try {
+      content.value = await loadContent(article.value)
+    } catch (e) {
+      console.error('加载文章内容失败:', e)
+      content.value = '<p style="padding:2em;text-align:center;color:var(--text-tertiary)">文章内容加载失败，请刷新页面重试</p>'
+    }
     loading.value = false
   }
 })

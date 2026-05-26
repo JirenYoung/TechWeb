@@ -3,7 +3,7 @@
     <button
       v-show="show"
       @click="scrollToTop"
-      class="fixed bottom-8 right-8 z-40 w-10 h-10 rounded-full flex items-center justify-center btn-hover backdrop-blur-md border"
+      class="fixed z-40 w-9 h-9 rounded-full flex items-center justify-center btn-hover backdrop-blur-md border bottom-20 right-4 md:bottom-8 md:right-8 md:w-10 md:h-10"
       :style="{
         backgroundColor: 'var(--card-bg)',
         borderColor: 'var(--border-color)',

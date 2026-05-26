@@ -1,11 +1,11 @@
 <template>
   <div class="archive-page">
-    <div class="max-w-3xl mx-auto px-6 py-24 md:py-32">
-      <header class="mb-16 opacity-0-start animate-fade-in">
-        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4" :style="{ color: 'var(--text-primary)' }">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 md:py-24 lg:py-32">
+      <header class="mb-12 md:mb-16 text-center md:text-left opacity-0-start animate-fade-in">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 md:mb-4" :style="{ color: 'var(--text-primary)' }">
           <span class="char-by-char" style="visibility:hidden;">归档</span>
         </h1>
-        <p class="text-lg" :style="{ color: 'var(--text-tertiary)' }">
+        <p class="text-base md:text-lg" :style="{ color: 'var(--text-tertiary)' }">
           共 {{ totalCount }} 篇文章
         </p>
       </header>
@@ -16,11 +16,10 @@
         <div
           v-for="(groupArticles, year) in archives"
           :key="year"
-          class="mb-16 scroll-reveal"
+          class="mb-12 md:mb-16 scroll-reveal"
         >
-          <div class="flex items-center gap-4 mb-8">
-            <span class="text-3xl font-bold font-mono text-primary-500 hidden md:block">{{ year }}</span>
-            <span class="text-2xl font-bold md:hidden" :style="{ color: 'var(--text-primary)' }">{{ year }}</span>
+          <div class="flex items-center gap-4 mb-6 md:mb-8">
+            <span class="text-2xl sm:text-3xl font-bold font-mono text-primary-500">{{ year }}</span>
             <span class="hidden md:block flex-1 h-px" :style="{ backgroundColor: 'var(--border-color)' }"></span>
           </div>
 
@@ -29,17 +28,17 @@
               v-for="article in groupArticles"
               :key="article.id"
               :to="`/article/${article.id}`"
-              class="group flex flex-col sm:flex-row items-start gap-4 sm:gap-8 py-5 border-b transition-colors duration-300"
+              class="group flex flex-col sm:flex-row items-start gap-2 sm:gap-4 md:gap-8 py-4 md:py-5 border-b transition-colors duration-300"
               :style="{ borderColor: 'var(--border-color)' }"
             >
-              <time class="text-sm font-mono whitespace-nowrap pt-0.5 min-w-[100px]" :style="{ color: 'var(--text-tertiary)' }">
+              <time class="text-xs md:text-sm font-mono whitespace-nowrap pt-0.5" :style="{ color: 'var(--text-tertiary)' }">
                 {{ article.date.slice(5) }}
               </time>
               <div class="flex-1 min-w-0">
-                <h3 class="text-base font-medium leading-snug transition-colors duration-300 group-hover:text-primary-500" :style="{ color: 'var(--text-primary)' }">
+                <h3 class="text-sm sm:text-base font-medium leading-snug transition-colors duration-300 group-hover:text-primary-500" :style="{ color: 'var(--text-primary)' }">
                   {{ article.title }}
                 </h3>
-                <div class="flex items-center gap-2 mt-1.5">
+                <div class="flex items-center gap-1.5 mt-1.5">
                   <span
                     v-for="tag in article.tags"
                     :key="tag"

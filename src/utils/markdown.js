@@ -18,8 +18,19 @@ marked.setOptions({
 })
 
 const renderer = new marked.Renderer()
+let _resolveImage = null
+
 renderer.image = function (href, title, text) {
-  return `<img src="${href}" alt="${text || ''}" title="${title || ''}" loading="lazy" decoding="async" style="border-radius:12px;max-width:100%;margin:1.5em 0;" />`
+  if (typeof href !== 'string') {
+    text = href.text
+    title = href.title
+    href = href.href
+  }
+  let src = href
+  if (_resolveImage && (href.startsWith('./') || href.startsWith('../') || (!href.startsWith('/') && !href.startsWith('http')))) {
+    src = _resolveImage(href) || href
+  }
+  return `<img src="${src}" alt="${text || ''}" title="${title || ''}" loading="lazy" decoding="async" style="border-radius:12px;max-width:100%;margin:1.5em 0;" />`
 }
 
 marked.use({ renderer })
@@ -41,7 +52,7 @@ export function parseFrontmatter(raw) {
         let value = line.slice(colonIdx + 1).trim()
 
         if (value.startsWith('[') && value.endsWith(']')) {
-          value = value.slice(1, -1).split(',').map(s => s.trim().replace(/['"]/g, ''))
+          value = value.slice(1, -1).split(',').map(s => s.trim().replace(/['"]/g, '')).filter(Boolean)
         } else {
           value = value.replace(/^['"]|['"]$/g, '')
         }
@@ -57,6 +68,7 @@ export function parseFrontmatter(raw) {
   return { frontmatter, body }
 }
 
-export function renderMarkdown(md) {
+export function renderMarkdown(md, options = {}) {
+  _resolveImage = options.resolveImage || null
   return marked.parse(md)
 }

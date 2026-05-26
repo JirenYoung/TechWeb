@@ -1,14 +1,14 @@
 import { ref, watchEffect } from 'vue'
 
-const isDark = ref(false)
+const isDark = ref(true)
 
 export function useTheme() {
   const initTheme = () => {
-    isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+    isDark.value = !window.matchMedia('(prefers-color-scheme: light)').matches
   }
 
   const applyTheme = () => {
-    document.documentElement.classList.toggle('dark', isDark.value)
+    document.documentElement.classList.toggle('light', !isDark.value)
   }
 
   watchEffect(applyTheme)

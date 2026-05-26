@@ -1,6 +1,15 @@
 import { computed, triggerRef } from 'vue'
 
-const postModules = import.meta.glob('/src/posts/*.md', { query: '?raw', import: 'default', eager: true })
+const postModules = import.meta.glob('/src/posts/**/index.md', { query: '?raw', import: 'default', eager: true })
+const imageModules = import.meta.glob('/src/posts/**/*.{jpg,jpeg,png,gif,webp,svg}', { eager: true, import: 'default' })
+
+function resolveCover(rawCover, filepath) {
+  if (!rawCover || !rawCover.startsWith('./')) return rawCover
+  const dir = filepath.substring(0, filepath.lastIndexOf('/'))
+  const relPath = rawCover.replace(/^\.\//, '')
+  const lookupKey = `${dir}/${relPath}`
+  return imageModules[lookupKey] || rawCover
+}
 
 const posts = []
 let id = 1
@@ -18,7 +27,7 @@ Object.entries(postModules).forEach(([filepath, raw]) => {
     const key = line.slice(0, ci).trim()
     let val = line.slice(ci + 1).trim()
     if (val.startsWith('[') && val.endsWith(']')) {
-      val = val.slice(1, -1).split(',').map(s => s.trim().replace(/['"]/g, ''))
+      val = val.slice(1, -1).split(',').map(s => s.trim().replace(/['"]/g, '')).filter(Boolean)
     } else {
       val = val.replace(/^['"]|['"]$/g, '')
     }
@@ -33,7 +42,7 @@ Object.entries(postModules).forEach(([filepath, raw]) => {
     date: meta.date || '1970-01-01',
     tags: meta.tags || [],
     categories: meta.categories || [],
-    cover: meta.cover || '',
+    cover: resolveCover(meta.cover, filepath),
     excerpt: meta.excerpt || '',
     featured: meta.featured || false,
     readTime: Math.max(1, Math.round(bodyLen / 500)),
@@ -76,7 +85,15 @@ async function loadContent(article) {
   if (article._content) return article._content
   await ensureMarkdown()
   const { body } = _parseFM(article._raw)
-  article._content = _renderMD(body)
+
+  function resolveImage(href) {
+    const dir = article.filepath.substring(0, article.filepath.lastIndexOf('/'))
+    const relPath = href.replace(/^\.\//, '')
+    const lookupKey = `${dir}/${relPath}`
+    return imageModules[lookupKey] || href
+  }
+
+  article._content = _renderMD(body, { resolveImage })
   triggerRef(allArticles)
   return article._content
 }
