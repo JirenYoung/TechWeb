@@ -29,8 +29,6 @@
     <div class="p-5">
       <div class="flex items-center gap-3 text-xs mb-2.5" :style="{ color: 'var(--text-tertiary)' }">
         <time>{{ article.date }}</time>
-        <span class="opacity-50">·</span>
-        <span>{{ article.readTime }} 分钟阅读</span>
       </div>
       <h3
         class="text-lg font-semibold leading-snug mb-2 line-clamp-2 transition-colors duration-300 group-hover:text-primary-500"

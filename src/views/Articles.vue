@@ -102,9 +102,6 @@ watch(filteredArticles, () => {
   opacity: 0;
   transform: scale(0.96);
 }
-.article-list-leave-active {
-  position: absolute;
-}
 
 /* 隐藏横向滚动条 */
 .scrollbar-hide {
