@@ -1,0 +1,6 @@
+node_modules
+dist
+.git
+.codewhale
+.obsidian
+codewhale-tui-windows-x64.exe
