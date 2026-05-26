@@ -1,4 +1,6 @@
 node_modules
 dist
-
+.codewhale/
+.obsidian/
+codewhale-tui-windows-x64.exe
 chat_export_20260526_205221.md
