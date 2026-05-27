@@ -71,6 +71,20 @@ featured: false
 正文内容...
 ```
 
+### 快捷创建文章
+
+使用 `blog new` 命令快速创建文章模板：
+
+```bash
+blog new 文章标题
+```
+
+该命令会自动在 `src/posts/` 下创建 `文章标题-当前日期/` 目录，包含：
+- 预设 frontmatter 的 `index.md`（含 title、date、tags、categories、cover、excerpt、featured 字段）
+- `images/` 图片子目录
+
+> 如果 `blog` 命令未注册，可使用 `node bin/blog.js new 文章标题`。
+
 ### 项目结构
 
 ```
@@ -135,6 +149,20 @@ featured: false
 Content goes here...
 ```
 
+### Quick Article Creation
+
+Use the `blog new` command to scaffold a new article:
+
+```bash
+blog new "Article Title"
+```
+
+This automatically creates an `Article Title-YYYY-MM-DD/` directory under `src/posts/` with:
+- A pre-filled `index.md` (including title, date, tags, categories, cover, excerpt, featured fields)
+- An `images/` subdirectory
+
+> If the `blog` command is not registered, use `node bin/blog.js new "Article Title"`.
+
 ---
 
 ## 🇩🇪 Deutsch
@@ -185,6 +213,20 @@ featured: false
 
 Inhalt hier...
 ```
+
+### Schnelle Artikelerstellung
+
+Verwende den `blog new` Befehl, um schnell einen neuen Artikel zu erstellen:
+
+```bash
+blog new "Artikel Titel"
+```
+
+Dies erstellt automatisch ein `Artikel Titel-JJJJ-MM-TT/` Verzeichnis unter `src/posts/` mit:
+- Einer vorgefüllten `index.md` (mit title, date, tags, categories, cover, excerpt, featured Feldern)
+- Einem `images/` Unterverzeichnis
+
+> Falls der `blog` Befehl nicht registriert ist, verwende `node bin/blog.js new "Artikel Titel"`.
 
 ---
 
